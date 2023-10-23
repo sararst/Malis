@@ -36,6 +36,7 @@ class KNN:
         self.X = X  # X_train
         self.y = y  # y_train   
 
+
     def majority_vote(self, neigh):
         c = Counter(neigh)
         return c.most_common(1)[0][0]  # most_common(n) returns a list with the n most recurring votes (n=1 -> top vote)
@@ -48,11 +49,24 @@ class KNN:
         OUTPUT :
         - y_hat : is a Mx1 numpy array containing the predicted labels for the X_new points
         ''' 
-        dst = self.minkowski_dist(X_new, p)
-        # knn = dst.argsort(axis=0)[:self.k, :].T
-        knn = dst.argsort(axis=0)[:, :self.k]
+        # dst = self.minkowski_dist(X_new, p)
+        # knn = dst.argsort(axis=0)[:, :self.k]
         # count the number of times each label appears in each row
-        y_hat = np.array([self.majority_vote(self.y[knn][i]) for i in range(len(self.y[knn]))])
+        # y_hat = np.array([self.majority_vote(self.y[knn][i]) for i in range(len(self.y[knn]))])
+        # return y_hat
+    
+        if self.X is None or self.y is None:
+            raise Exception("Sorry, model is not trained. Call train() with training data")
+            
+        distance = self.minkowski_dist(X_new, p)
+        y_hat = []
+        
+        for row in distance:
+            k_indice = np.argsort(row)[:self.k]
+            k_nearest = [self.y[i] for i in k_indice]
+            prediction = np.bincount(k_nearest).argmax()
+            #prediction2 = max(set(k_nearest), key=k_nearest.count)
+            y_hat.append(prediction)
         return y_hat
     
     
@@ -69,4 +83,5 @@ class KNN:
         X_new_resh = np.expand_dims(X_new, 1)
         X_diff = X_new_resh - self.X
         dst = ((abs(X_diff)**p).sum(axis=2))**(1/p)
+        # dst = distance_matrix(X_new, self.X, p=p)
         return dst  
