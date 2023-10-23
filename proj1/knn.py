@@ -51,12 +51,12 @@ class KNN:
         ''' 
         # dst = self.minkowski_dist(X_new, p)
         # knn = dst.argsort(axis=0)[:, :self.k]
-        # count the number of times each label appears in each row
+        # # count the number of times each label appears in each row
         # y_hat = np.array([self.majority_vote(self.y[knn][i]) for i in range(len(self.y[knn]))])
         # return y_hat
     
         if self.X is None or self.y is None:
-            raise Exception("Sorry, model is not trained. Call train() with training data")
+           raise Exception("Sorry, model is not trained. Call train() with training data")
             
         distance = self.minkowski_dist(X_new, p)
         y_hat = []
@@ -67,7 +67,7 @@ class KNN:
             prediction = np.bincount(k_nearest).argmax()
             #prediction2 = max(set(k_nearest), key=k_nearest.count)
             y_hat.append(prediction)
-        return y_hat
+        return np.array(y_hat)
     
     
     def minkowski_dist(self,X_new,p):
