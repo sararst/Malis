@@ -83,5 +83,6 @@ class KNN:
         X_new_resh = np.expand_dims(X_new, 1)
         X_diff = X_new_resh - self.X
         dst = ((abs(X_diff)**p).sum(axis=2))**(1/p)
-        # dst = distance_matrix(X_new, self.X, p=p)
+        # other way to define the distance matrix:
+        # dst = distance_matrix(X_new, self.X, p=p)  
         return dst  
