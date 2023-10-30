@@ -64,8 +64,9 @@ class KNN:
         for row in distance:
             k_indice = np.argsort(row)[:self.k]
             k_nearest = [self.y[i] for i in k_indice]
-            prediction = np.bincount(k_nearest).argmax()
-            #prediction2 = max(set(k_nearest), key=k_nearest.count)
+            prediction = max(set(k_nearest), key=k_nearest.count)
+            # another way to calculate prediction
+            # prediction = np.bincount(k_nearest).argmax() 
             y_hat.append(prediction)
         return np.array(y_hat)
     
@@ -83,6 +84,6 @@ class KNN:
         X_new_resh = np.expand_dims(X_new, 1)
         X_diff = X_new_resh - self.X
         dst = ((abs(X_diff)**p).sum(axis=2))**(1/p)
-        # other way to define the distance matrix:
-        # dst = distance_matrix(X_new, self.X, p=p)  
+        # other way to define the distance matrix, faster than the one above:
+        dst = distance_matrix(X_new, self.X, p=p)  
         return dst  
