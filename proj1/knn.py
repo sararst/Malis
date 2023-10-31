@@ -80,10 +80,9 @@ class KNN:
         OUTPUT :
         - dst : is an MxN numpy array containing the distance of each point in X_new to X
         '''
-        # compute the distance in all the points in the train set and test set --> distance matrix
-        # X_new_resh = np.expand_dims(X_new, 1)
-        # X_diff = X_new_resh - self.X
-        # dst = ((abs(X_diff)**p).sum(axis=2))**(1/p)
-        # other way to define the distance matrix, faster than the one above:
-        dst = distance_matrix(X_new, self.X, p=p)  
+        X_new_resh = np.expand_dims(X_new, 1)
+        X_diff = X_new_resh - self.X
+        dst = ((abs(X_diff)**p).sum(axis=2))**(1/p)
+        # other way to define the distance matrix, faster than the one above (with this we can obtain a plot):
+        # dst = distance_matrix(X_new, self.X, p=p)  
         return dst  
