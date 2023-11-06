@@ -37,9 +37,9 @@ class KNN:
         self.y = y  # y_train   
 
 
-    def majority_vote(self, neigh):
-        c = Counter(neigh)
-        return c.most_common(1)[0][0]  # most_common(n) returns a list with the n most recurring votes (n=1 -> top vote)
+    # def majority_vote(self, neigh):
+    #    c = Counter(neigh)
+    #    return c.most_common(1)[0][0]  # most_common(n) returns a list with the n most recurring votes (n=1 -> top vote)
        
     def predict(self,X_new,p):
         '''
