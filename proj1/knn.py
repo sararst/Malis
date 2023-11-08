@@ -15,10 +15,8 @@ class KNN:
         INPUT :
         - k : is a natural number bigger than 0 
         '''
-
         if k <= 0:
-            raise Exception("Sorry, no numbers below or equal to zero. Start again!")
-            
+            raise Exception("Sorry, no numbers below or equal to zero. Start again!")    
         # empty initialization of X and y
         self.X = []
         self.y = []
@@ -31,11 +29,8 @@ class KNN:
         - X : is a 2D NxD numpy array containing the coordinates of points
         - y : is a 1D Nx1 numpy array containing the labels for the corrisponding row of X
         '''
-        # KNN only computes the distance between training points and test points
-        # --> here I only need to store the training set (prior knowledge, will be used to predict new labels)
-        self.X = X  # X_train
-        self.y = y  # y_train   
-
+        self.X = X  
+        self.y = y    
 
     # def majority_vote(self, neigh):
     #    c = Counter(neigh)
@@ -49,17 +44,19 @@ class KNN:
         OUTPUT :
         - y_hat : is a Mx1 numpy array containing the predicted labels for the X_new points
         ''' 
+    
+        if self.X is None or self.y is None:
+           raise Exception("Sorry, model is not trained. Call train() with training data")
+
+        distance = self.minkowski_dist(X_new, p)
+        y_hat = []
+
+        # first approach, less efficient
         # dst = self.minkowski_dist(X_new, p)
         # knn = dst.argsort(axis=0)[:, :self.k]
         # # count the number of times each label appears in each row
         # y_hat = np.array([self.majority_vote(self.y[knn][i]) for i in range(len(self.y[knn]))])
         # return y_hat
-    
-        if self.X is None or self.y is None:
-           raise Exception("Sorry, model is not trained. Call train() with training data")
-            
-        distance = self.minkowski_dist(X_new, p)
-        y_hat = []
         
         for row in distance:
             k_indice = np.argsort(row)[:self.k]
