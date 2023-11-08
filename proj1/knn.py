@@ -51,7 +51,7 @@ class KNN:
         distance = self.minkowski_dist(X_new, p)
         y_hat = []
 
-        # first approach, less efficient
+        # first approach, less efficient:
         # dst = self.minkowski_dist(X_new, p)
         # knn = dst.argsort(axis=0)[:, :self.k]
         # # count the number of times each label appears in each row
