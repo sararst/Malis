@@ -1,12 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
 
 # code for the perceptron algorithm
 
 class Perceptron:
     def __init__(self, learning_rate):
         '''
-        constructor of the Perceptron class
+        Initializes the parameter of the percetron algorithm:
+        Weights: They are attached with every feature(input) and they convey
+        the importance of that corresponding feature in predicting
+        the final output.
+        Bias: acts as the intercept from a linear equation, it shifts and helps a
+        model to find a better fit.
+        Learning rate: is a hyper-parameter that controls the size of the 
+        update made to the weights during training.
         '''
         self.weights = None
         self.bias = None
@@ -37,6 +45,11 @@ class Perceptron:
         bias = np.random.rand(1, 1)
         return weights, bias
 
+    def activation(self, z):
+        '''
+        Activation function that return the sign, that can be -1, 0 or 1
+        '''
+        return np.sign(z)
 
     def predict(self, X):
         '''
@@ -47,12 +60,27 @@ class Perceptron:
         X - input matrix of dimension N x D
         '''
         # y_pred = np.dot(X, self.weights) + self.bias
-        y_pred = np.dot(X, self.weights[1:]) + self.weights[0] 
-        return 1 if y_pred > 0 else -1
+        y_pred = np.dot(X, self.weights[1:]) + self.bias 
+        return self.activation(y_pred)
 
+    def gradient_descent_step(self, xi, yi):
+        '''
+        Implements a gradient descent steps for the percetron to 
+        update weights and bias
+        Input:
+        X: input sample
+        y: label associated to the features(X)
+        weights: Parameters vector of size D x 1
+        bias: Bias term (a scalar)
+        alpha: The learning rate
+        '''
+        self.weights = self.weights + self.alpha * xi.reshape(-1, 1)  * yi
+        self.bias = self.bias + self.alpha * yi
+        return self.weights, self.bias
 
     def train(self, X, y):
         '''
+        Implement the perceptron train algorithm
         Inputs:
         X - input features matrix
         y - vector of labels
@@ -68,7 +96,7 @@ class Perceptron:
             m = 0
             for xi, yi in zip(X, y):
                 if (self.predict(xi) * yi < 0):
-                    self.weights = self.weights + self.alpha * xi * yi
+                    self.weights, self.bias = self.gradient_descent(xi, yi)
                     m = m + 1
             if m == 0:
                 break
