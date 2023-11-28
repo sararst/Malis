@@ -4,7 +4,7 @@ from sklearn.preprocessing import PolynomialFeatures
 
 # code for the perceptron algorithm
 
-class Perceptron:
+class Perceptron_:
     def __init__(self, learning_rate):
         '''
         Initializes the parameter of the percetron algorithm:
