@@ -25,6 +25,8 @@ class Perceptron_:
         Initializes the parameters so that the have the same dimensions as the input data + 1
         Inputs:
         X - input data matrix of dimensions N x D
+        weights - vector of weights. If None, it will be initialized as random vector
+        b - bias
         
         Outputs:
         weights - model parameters initialized to zero size (D + 1) x 1
@@ -46,11 +48,9 @@ class Perceptron_:
 
     def predict(self, X):
         '''
-        To classify a new point:
-        - returns 1 if correct classification
-        - 0 otherwise
         Input:
         X - input matrix of dimension N x D
+        Used to classify a new point.
         '''
         y_pred = np.dot(X, self.weights) + self.bias
         return self.activation(y_pred)
