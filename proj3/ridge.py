@@ -33,14 +33,12 @@ class Ridge_():
     
     def ridge_predict(self, X_t):
         '''
-        To classify a new point:
-        - returns 1 if correct classification
-        - 0 otherwise
         Input:
         X - input matrix of dimension N x D
+        Output:
+        predictions
         '''
         if X_t.shape[1] != len(self.weights):
             raise ValueError("Cannot perform matrix multiplication in ridge_predict")
-        # predictions = X_t.dot(self.weights.to_numpy())
         predictions = X_t.dot(self.weights)
         return predictions
