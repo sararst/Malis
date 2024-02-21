@@ -1,2 +1,2 @@
-# MalisProj
-Malis projects EURECOM 2023/2024
+# Malis
+Malis projects and labs EURECOM 2023/2024
